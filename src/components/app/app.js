@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import AppHeader from '../app-header';
 import SearchPanel from '../search-panel';
 import PostStatusFilter from '../post-status-filter';
@@ -17,14 +17,50 @@ import '/Front/BeOnMax/React/project_01/my-app/src/index.css';
 
 
 
-const App = () => {
+export default class App extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            data :[
+                {label:'Task_1', important: true, id: 1},
+                {label:'Task_2', important: false, id: 2},
+                {label:'Task_3', important: false, id: 3}
 
-    const data = [
-        {label:'Task_1', important: true, id: 'djjl'},
-        {label:'Task_2', important: false, id: 'tkos'},
-        {label:'Task_3', important: false, id: 'hfug'}
-    ];
+            ]
+        };
+        this.deleteItem = this.deleteItem.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.maxId = 4;
+    }
 
+    deleteItem(id) {
+        //console.log(id);
+        this.setState(({data})=> {
+            const index = data.findIndex(elem => elem.id === id);
+
+            const newArr = [...data.slice(0, index), ...data.slice(index + 1)];
+            return{
+                data: newArr
+            }
+        });
+    } 
+
+    addItem(body){
+        const newItem = {
+            label: body,
+            important: false,
+            id: this.maxId++
+        }
+        this.setState(({data}) => {
+            const newArr = [...data, newItem];
+            return {
+                data: newArr
+            }
+        })
+        
+    }
+ 
+  render() {
     return (
         <div className="app">
           <AppHeader/>
@@ -32,10 +68,13 @@ const App = () => {
               <SearchPanel/>
               <PostStatusFilter/>
           </div>
-          <PostList posts={data}/>
-          <PostAddForm/>
+          <PostList 
+          posts={this.state.data}
+          onDelete={ this.deleteItem}/>
+          <PostAddForm
+          onAdd= {this.addItem}/>
         </div>
         )
 }
+}
 
-export default App;
