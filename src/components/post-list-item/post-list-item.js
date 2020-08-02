@@ -1,31 +1,31 @@
 import React, {Component} from 'react';
 
 export default class PostListItem extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            important: false,
-            like: false
-        };
-        this.onImportent = this.onImportent.bind(this);
-        this.onLike = this.onLike.bind(this);
-    }
+    // constructor(props){
+    //     super(props);
+    //     this.state = {
+    //         important: false,
+    //         like: false
+    //     };
+    //     this.onImportent = this.onImportent.bind(this);
+    //     this.onLike = this.onLike.bind(this);
+    // }
 
-    onImportent() {
-        this.setState(({important})=> ({
-            important: !important
-        }))
-    }
+    // onImportent() {
+    //     this.setState(({important})=> ({
+    //         important: !important
+    //     }))
+    // }
 
-    onLike() {
-        this.setState(({like})=> ({
-            like: !like
-        }))
-    }
+    // onLike() {
+    //     this.setState(({like})=> ({
+    //         like: !like
+    //     }))
+    // }
 
     render() {
-        const {label, onDelete} = this.props;
-        const {important, like} = this.state;
+        const {label, onDelete, onToggleImportant, onToggleLiked, important, like} = this.props;
+        // const {important, like} = this.state;
         
     let classNames = 'app-list-item d-flex justify-content-between';
 
@@ -42,12 +42,12 @@ export default class PostListItem extends Component {
             <div className={classNames}>
               <span 
               className="app-list-item-label"
-              onClick={this.onLike}>
+              onClick={onToggleLiked}>
                 {label}
               </span>
               <div className="d-flex justify-content-ctyter align-items-center">
                 <button type="button" className="btn-star btn-sm"
-                onClick={this.onImportent}>
+                onClick={onToggleImportant}>
                     <i className="fa fa-star"></i>
                 </button>
                 <button type="button" className="btn-trash btn-sm"
